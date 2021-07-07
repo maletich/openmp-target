@@ -5,7 +5,7 @@
   Multiplies two matrices of dimension n x n and passes back resulting matrix.
  */
 template<typename T>                                     
-void gemv(int n, T alpha, const T* __restrict__ A, const T* __restrict__ B, T* __restrict__ result)
+void gemm(int n, T alpha, const T* __restrict__ A, const T* __restrict__ B, T* __restrict__ result)
 {
   for (int row = 0; row < n; row++)                                              
     for (int col = 0; col < n; col++)
@@ -73,7 +73,7 @@ std::cout << "Testing 3x3 matrix multiplication.\n";
         }
     }
 
-  gemv(dim, 1.0f, C, D, R);
+  gemm(dim, 1.0f, C, D, R);
 
   std::cout << "Matrix C: "; printMatrix(dim, C); std::cout << "\n";
   std::cout << "Matrix D: "; printMatrix(dim, D); std::cout << "\n";
@@ -94,8 +94,8 @@ int main()
   //std::cout << "Matrix A: "; printMatrix(N, A); std::cout << "\n";
   //std::cout << "Matrix B: "; printMatrix(N, B); std::cout << "\n";
     
-  Timer local("GEMV");
-  gemv(N, 1.0f, A, B, result);
+  Timer local("GEMM");
+  gemm(N, 1.0f, A, B, result);
 
   // testtbt();
 

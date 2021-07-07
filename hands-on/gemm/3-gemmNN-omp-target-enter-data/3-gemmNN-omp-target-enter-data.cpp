@@ -7,7 +7,6 @@
 template<typename T>                                     
 void gemm(int n, T alpha, const T* __restrict__ A, const T* __restrict__ B, T* __restrict__ result)
 {
-  // #pragma omp target teams distribute collapse(2) map(to:A[:n*n], B[:n*n]) map(from:result[:n*n])
 #pragma omp target teams distribute collapse(2) map(to:A[:n*n], B[:n*n]) map(from:result[:n*n])  
   for (int row = 0; row < n; row++)                                              
     for (int col = 0; col < n; col++)
@@ -15,7 +14,6 @@ void gemm(int n, T alpha, const T* __restrict__ A, const T* __restrict__ B, T* _
 	const T* __restrict__ A_row = A + row * n;
 	T sum(0);
 	const T* __restrict__ B_col = B + col;
-	// can move pragma for here
 #pragma omp parallel for reduction(+:sum)
 	for(int i = 0; i < n; i++)
 	  {
